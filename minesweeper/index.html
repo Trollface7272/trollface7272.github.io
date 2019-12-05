@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Minesweeper</title>
+    <script src="mine.js"></script>
+</head>
+<body>
+    <canvas width="1000" height="1000" id="canvas"></canvas>
+
+
+    <script>
+        const canvas = document.getElementById('canvas')
+        const cont = canvas.getContext('2d')
+        var x = []
+        var y = []
+        
+        
+        function draw() {
+            
+            for(let i = 0; i < 10; i++) {
+                for(let j = 0; j < 10; j++) {
+                    //cont.fillStyle = "black"
+                    //cont.fillRect(5+i*60, 5+j*60, 50, 50)
+                    y[j] = new mine(cont, 5+i*60, 5+j*60)
+                    y[j].onClick
+                }
+                x[i] = y
+            }
+            console.log(x)
+        }
+        draw()
+    </script>
+</body>
+</html>
