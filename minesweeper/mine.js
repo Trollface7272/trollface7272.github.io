@@ -1,11 +1,13 @@
 class mine {
-    constructor(cnt, x, y) {
+    constructor(cnt, x, y, indexX, indexY) {
         this.color = 'black'
         this.hasMine = this.hasMine()
         this.cnt = cnt
         this.x = x
         this.y = y
-
+        this.indexX = indexX
+        this.indexY = indexY
+        this.minesAround = 0
 
         this.draw()
         document.addEventListener("click", this.click)
@@ -20,8 +22,15 @@ class mine {
         this.cnt.fillRect(this.x, this.y, 50, 50)
     }
     click(event) {
-        console.log(event.clientX / 60 - 5)
-        console.log(event.clientY / 60 - 5)
+        var x = parseInt((event.clientX - 5) / 60)
+        var y = parseInt((event.clientY - 5)/ 60)
+        changeColor(x, y)
+    }
+    getMinesAround() {
+        if(this.hasMine) return
+        for(let i = 0; i < 3; i++)
+            for(let j = 0; j < 3; j++)
+                this.minesAround += checkForMines(this.indexX+1-i, this.indexY+1-j) ? 1 : 0
     }
     
 }

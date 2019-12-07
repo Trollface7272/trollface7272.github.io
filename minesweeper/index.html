@@ -16,20 +16,52 @@
         const cont = canvas.getContext('2d')
         var x = []
         var y = []
+        var limit = 5
         
         
         function draw() {
             
-            for(let i = 0; i < 10; i++) {
-                for(let j = 0; j < 10; j++) {
+            for(let i = 0; i < limit; i++) {
+                for(let j = 0; j < limit; j++) {
                     //cont.fillStyle = "black"
                     //cont.fillRect(5+i*60, 5+j*60, 50, 50)
-                    y[j] = new mine(cont, 5+i*60, 5+j*60)
+                    y[j] = new mine(cont, 5+i*60, 5+j*60, i, j)
                     y[j].onClick
+                    
                 }
                 x[i] = y
+                y = []
             }
-            console.log(x)
+            x.forEach(xEl => {
+                xEl.forEach(yEl => {
+                    yEl.getMinesAround()
+                });
+            });
+        }
+        function changeColor(indexX, indexY) {
+            if(x == null) return
+            let locX = 5+indexX*60,
+            locY = 5+indexY*60
+            console.log(x[indexX][indexY])
+            var color = x[indexX][indexY].hasMine == true ? 'red' : 'green'
+            cont.fillStyle = color
+            cont.fillRect(locX, locY, 50, 50)
+            if(color == 'red') return x = null
+            cont.fillStyle = "white"
+            cont.font = "35px Arial"
+            console.log(x[indexX][indexY].minesAround)
+            if(!x[indexX][indexY].hasMine && x[indexX][indexY].minesAround > 0) cont.fillText(x[indexX][indexY].minesAround, locX+15, locY+40)
+            if(x[indexX][indexY].minesAround == 0) checkAround(indexX, indexY)
+        }
+        function checkForMines(indexX, indexY) {
+            if(indexX < 0 || indexY < 0 || indexX >= limit || indexY >= limit) return 
+            return x[indexX][indexY].hasMine ? true : false
+        }
+        function checkAround(indexX, indexY) {
+            if(x[indexX+1][indexY].minesAround == 0 && indexX+1 <= limit) changeColor(indexX+1, indexY)
+            if(x[indexX-1][indexY].minesAround == 0 && indexX-1 >= 0) changeColor(indexX-1, indexY)
+            if(x[indexX][indexY+1].minesAround == 0) changeColor(indexX, indexY+1)
+            if(x[indexX][indexY-1].minesAround == 0) changeColor(indexX, indexY-1)
         }
         draw()
     </script>
