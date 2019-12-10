@@ -1,6 +1,5 @@
 class mine {
     constructor(cnt, x, y, indexX, indexY) {
-        this.color = 'black'
         this.hasMine = this.hasMine()
         this.cnt = cnt
         this.x = x
@@ -8,6 +7,8 @@ class mine {
         this.indexX = indexX
         this.indexY = indexY
         this.minesAround = 0
+        this.revealed = false
+        this.hasFlag = false
 
         this.draw()
         document.addEventListener("click", this.click)
@@ -24,7 +25,10 @@ class mine {
     click(event) {
         var x = parseInt((event.clientX - 5) / 60)
         var y = parseInt((event.clientY - 5)/ 60)
-        changeColor(x, y)
+        try {
+            changeColor(x, y)
+        }catch(e){}
+        checkForWin()
     }
     getMinesAround() {
         if(this.hasMine) return

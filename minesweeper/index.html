@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="index.css">
     <title>Minesweeper</title>
     <script src="mine.js"></script>
 </head>
@@ -16,18 +17,19 @@
         const cont = canvas.getContext('2d')
         var x = []
         var y = []
-        var limit = 5
+        var limit = 15
+        var flag = new Image()
+        var bomb = new Image()
+        flag.src = "./Source/Flag.png"
+        bomb.src = "./Source/Bomb.png"
         
         
         function draw() {
             
             for(let i = 0; i < limit; i++) {
                 for(let j = 0; j < limit; j++) {
-                    //cont.fillStyle = "black"
-                    //cont.fillRect(5+i*60, 5+j*60, 50, 50)
-                    y[j] = new mine(cont, 5+i*60, 5+j*60, i, j)
+                    y[j] = new mine(cont, 5+i*60, 5+j*60, i, j, limit)
                     y[j].onClick
-                    
                 }
                 x[i] = y
                 y = []
@@ -40,16 +42,19 @@
         }
         function changeColor(indexX, indexY) {
             if(x == null) return
+            if(x[indexX][indexY].hasFlag) return
             let locX = 5+indexX*60,
             locY = 5+indexY*60
-            console.log(x[indexX][indexY])
             var color = x[indexX][indexY].hasMine == true ? 'red' : 'green'
             cont.fillStyle = color
             cont.fillRect(locX, locY, 50, 50)
-            if(color == 'red') return x = null
+            if(color == 'red') {
+                cont.drawImage(bomb, locX, locY)
+                return x = null
+            }
             cont.fillStyle = "white"
             cont.font = "35px Arial"
-            console.log(x[indexX][indexY].minesAround)
+            x[indexX][indexY].revealed = true
             if(!x[indexX][indexY].hasMine && x[indexX][indexY].minesAround > 0) cont.fillText(x[indexX][indexY].minesAround, locX+15, locY+40)
             if(x[indexX][indexY].minesAround == 0) checkAround(indexX, indexY)
         }
@@ -58,10 +63,56 @@
             return x[indexX][indexY].hasMine ? true : false
         }
         function checkAround(indexX, indexY) {
-            if(x[indexX+1][indexY].minesAround == 0 && indexX+1 <= limit) changeColor(indexX+1, indexY)
-            if(x[indexX-1][indexY].minesAround == 0 && indexX-1 >= 0) changeColor(indexX-1, indexY)
-            if(x[indexX][indexY+1].minesAround == 0) changeColor(indexX, indexY+1)
-            if(x[indexX][indexY-1].minesAround == 0) changeColor(indexX, indexY-1)
+            try {
+                if(x[indexX+1][indexY].minesAround == 0 && !x[indexX+1][indexY].revealed && indexX+1 <= limit)  changeColor(indexX+1, indexY)
+            }catch(e){}
+            try{
+                if(x[indexX-1][indexY].minesAround == 0 && !x[indexX-1][indexY].revealed && indexX-1 >= -1)     changeColor(indexX-1, indexY)
+            }catch(e){}
+            try{
+                if(x[indexX][indexY+1].minesAround == 0 && !x[indexX][indexY+1].revealed && indexY+1 <= limit)  changeColor(indexX, indexY+1)
+            }catch(e){}
+            try{
+                if(x[indexX][indexY-1].minesAround == 0 && !x[indexX][indexY-1].revealed && indexY-1 >= -1)     changeColor(indexX, indexY-1)
+            }catch(e){} 
+        }
+        document.addEventListener('contextmenu', e => e.preventDefault())
+        canvas.oncontextmenu = function(e) {
+            try{
+                var indexX = parseInt((e.clientX - 5) / 60)
+                var indexY = parseInt((e.clientY - 5)/ 60)
+                console.log(x[indexX][indexY])
+                if(x[indexX][indexY].hasFlag) {
+                    if(x == null) return
+                    let locX = 5+indexX*60,
+                    locY = 5+indexY*60
+                    var color = 'black'
+                    cont.fillStyle = color
+                    cont.fillRect(locX, locY, 50, 50)
+                    x[indexX][indexY].hasFlag = false
+                }else {
+                    if(x == null) return
+                    let locX = 5+indexX*60,
+                    locY = 5+indexY*60
+                    var color = 'yellow'
+                    cont.fillStyle = color
+                    cont.fillRect(locX, locY, 50, 50)
+                    cont.drawImage(flag, locX+10, locY+5)
+                    x[indexX][indexY].hasFlag = true
+                    checkForWin()
+                }
+            }catch(e){}
+        }
+        function checkForWin() {
+            let u = 0
+            x.forEach(y => {
+                y.forEach(mine => {
+                    if((mine.hasFlag && mine.hasMine) || mine.revealed) u++
+                });
+            });
+            let a = "You won!";
+            if(u == limit*limit) setTimeout(() =>{alert(a); x = null}, 1)
+            
         }
         draw()
     </script>
