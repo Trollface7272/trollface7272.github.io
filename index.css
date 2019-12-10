@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+#links {
+    margin: auto;
+    width: 500px;
+    height: fit-content;
+    border: solid black 5px;
+    margin-top: 200px;
+}
+.reddirect {
+    font-size: 25px;
+    margin-bottom: 12.5px;
+    margin-top: 12.5px;
+    width: 100%;
+    text-align: center;
+}
