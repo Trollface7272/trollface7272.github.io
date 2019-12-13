@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./tile.js"></script>
+    <title>Fifteen</title>
+</head>
+<body>
+    <canvas width="1000px" height="1000px" id="canvas"></canvas>
+
+    <script>
+    const canvas = document.getElementById('canvas')
+    const cont = canvas.getContext('2d')
+    var tiles = []
+    var limit = 3
+    function draw() {
+        cont.clearRect(0, 0, 1000, 1000)
+        tiles.forEach(x => {
+            x.forEach(y => {
+                if(y.indexThis == 15) return
+                cont.fillStyle = "black"
+                cont.fillRect(y.indexX * 200 + 5, y.indexY * 200 + 5, y.width, y.width)
+                cont.fillStyle = "White"
+                cont.font = "50px Arial"
+                cont.fillText(y.indexThis, y.indexX * 200 + 5, y.indexY * 200 + 50)
+            });
+        });
+        
+    }
+    function createTitles() {
+        let k = 0
+        let tilesH = []
+        for(i = 0; i < 4; i++) {
+            for(j = 0; j < 4; j++) {
+                tilesH[j] = new tile(j, i, k, cont)
+                ++k
+            }
+            tiles[i] = tilesH
+            tilesH = []
+        }
+        draw()
+    }
+    createTitles()
+    </script>
+</body>
+</html>

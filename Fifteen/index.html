@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="tile.js"></script>
+    <title></title>
+</head>
+<body>
+    <canvas width="900px" height="900px" id="canv"></canvas>
+
+    <script>
+    const canv = document.getElementById('canv')
+    const cont = canv.getContext("2d")
+    var tileList = []
+    var width = 170
+
+    for(i = 0; i < 16; i++) {
+        tileList[i] = new tile(i)
+    }
+    function draw() {
+        cont.clearRect(0, 0, 900, 900)
+        tileList.forEach(tile => {
+            if(tile.number == 16) return
+            cont.fillStyle = "Black"
+            cont.fillRect(tile.x * 200, tile.y * 200, width, width)
+            cont.fillStyle = "White"
+            cont.font = "50px Arial"
+            cont.fillText(tile.number, tile.x * 200, tile.y * 200 + 100)
+        });
+    }
+    function click(event) {
+        let x = parseInt(event.clientY / 200)
+        let y = parseInt(event.clientX / 200)
+        let index = (x * 4) + (y + 1) - 1
+        let move = 'none'
+        if(x > 3 || y > 3) return
+        try{if(tileList[index-1].isEmpty) move = 'left'}catch(e){}
+        try{if(tileList[index+1].isEmpty) move = 'right'}catch(e){}
+        try{if(tileList[index-4].isEmpty) move = 'up'}catch(e){}
+        try{if(tileList[index+4].isEmpty) move = 'down'}catch(e){}
+        switch (move) {
+            case 'left':
+                helper = tileList[index]
+                tileList[index].setIndex(index-1)
+                tileList[index-1].setIndex(index)
+                tileList[index] = tileList[index-1]
+                tileList[index-1] = helper
+                break;
+
+            case 'right':
+                helper = tileList[index]
+                tileList[index].setIndex(index+1)
+                tileList[index+1].setIndex(index)
+                tileList[index] = tileList[index+1]
+                tileList[index+1] = helper
+                break;
+
+            case 'up':
+                helper = tileList[index]
+                tileList[index].setIndex(index-4)
+                tileList[index-4].setIndex(index)
+                tileList[index] = tileList[index-4]
+                tileList[index-4] = helper
+                break;
+
+            case 'down':
+                helper = tileList[index]
+                tileList[index].setIndex(index+4)
+                tileList[index+4].setIndex(index)
+                tileList[index] = tileList[index+4]
+                tileList[index+4] = helper
+                break;
+        
+            default:
+                break;
+        }
+        
+        draw()
+    }
+    draw()
+    </script>
+</body>
+</html>
