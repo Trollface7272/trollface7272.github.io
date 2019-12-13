@@ -8,19 +8,21 @@
     <title></title>
 </head>
 <body>
-    <canvas width="900px" height="900px" id="canv"></canvas>
+   <canvas width="900px" height="900px" id="canv"></canvas>
 
     <script>
     const canv = document.getElementById('canv')
     const cont = canv.getContext("2d")
     var tileList = []
     var width = 170
-
+    //Gen array with tiles
     for(i = 0; i < 16; i++) {
         tileList[i] = new tile(i)
     }
     function draw() {
+        //Clear canvas
         cont.clearRect(0, 0, 900, 900)
+        //Draw tiles and their numbers
         tileList.forEach(tile => {
             if(tile.number == 16) return
             cont.fillStyle = "Black"
@@ -31,15 +33,19 @@
         });
     }
     function click(event) {
-        let x = parseInt(event.clientY / 200)
-        let y = parseInt(event.clientX / 200)
+        //Get X and Y cords of clicked tile
+        let x = parseInt((event.clientY) / 200)
+        let y = parseInt((event.clientX) / 200)
+        //Get index that this tile has in array
         let index = (x * 4) + (y + 1) - 1
         let move = 'none'
-        if(x > 3 || y > 3) return
+        if(x > 3 || y > 3) return //return if click was outside of area with tiles
+        //Get direction to move
         try{if(tileList[index-1].isEmpty) move = 'left'}catch(e){}
         try{if(tileList[index+1].isEmpty) move = 'right'}catch(e){}
         try{if(tileList[index-4].isEmpty) move = 'up'}catch(e){}
         try{if(tileList[index+4].isEmpty) move = 'down'}catch(e){}
+        //Move the tile
         switch (move) {
             case 'left':
                 helper = tileList[index]
@@ -47,7 +53,7 @@
                 tileList[index-1].setIndex(index)
                 tileList[index] = tileList[index-1]
                 tileList[index-1] = helper
-                break;
+                break
 
             case 'right':
                 helper = tileList[index]
@@ -55,7 +61,7 @@
                 tileList[index+1].setIndex(index)
                 tileList[index] = tileList[index+1]
                 tileList[index+1] = helper
-                break;
+                break
 
             case 'up':
                 helper = tileList[index]
@@ -63,7 +69,7 @@
                 tileList[index-4].setIndex(index)
                 tileList[index] = tileList[index-4]
                 tileList[index-4] = helper
-                break;
+                break
 
             case 'down':
                 helper = tileList[index]
@@ -71,15 +77,54 @@
                 tileList[index+4].setIndex(index)
                 tileList[index] = tileList[index+4]
                 tileList[index+4] = helper
-                break;
+                break
         
             default:
-                break;
+                break
         }
         
+        //Draw moved tiles
         draw()
     }
+    function scramble() {
+        let checkIndex
+        //Get index of empty tile
+        tileList.forEach(tile => {
+            if(tile.isEmpty) checkIndex = tile.index
+        });
+        //Generate direction to move the tile
+        if(randBool()) {
+            if(randBool()) checkIndex++
+            else checkIndex--
+        }else if(randBool()) checkIndex += 4
+        else checkIndex -= 4
+        //If generated direction is out of array regenerate
+        if(checkIndex > 16 || checkIndex < 0) scramble()
+        //Create Mouse Event
+        var ev = document.createEvent("MouseEvent")
+        //Get x and y cords in pixels
+        let x = checkIndex % 4 * 200
+        let y = parseInt(checkIndex / 4) * 200
+        //Create Mouse Event Content
+        ev.initMouseEvent(
+            "click",
+            true /* bubble */, true /* cancelable */,
+            window, null,
+            x, y, x, y, /* coordinates */
+            false, false, false, false, /* modifier keys */
+            0 /*left*/, null
+        )
+        //Execute Mouse Event
+        canv.dispatchEvent(ev)
+
+        //Draw moved tiles
+        draw()
+    }
+    function randBool() {
+        return Math.random() >= 0.5;
+    }
     draw()
+    for(i = 0; i < 1000; i++) scramble()
     </script>
 </body>
 </html>
