@@ -5,14 +5,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="index.css">
+    <script src="player.js"></script>
+    <script src="ball.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <canvas width="1918px" height="920px" style="border: solid black 1px;"></canvas>
+    <div id="score1">0</div>
+    <div id="d">:</div>
+    <div id="score2">0</div>
+    <canvas width="1300px" height="800px" style="border: solid black 1px;" id="canvas"></canvas>
 
     <script>
-    const canv = document.getElementsByTagName('canvas')
-    canv.getContext() 
+    const canv = document.getElementById('canvas')
+    const cont = canv.getContext('2d')
+
+    var players = []
+    var canvasWidth = 1300
+    var canvasHeght = 800
+    var ball
+    var directionX = randBool()
+    var directionY = randBool()
+    var player1Score = 0
+    var player2Score = 0
+    var speed = 1
+    var game
+    var map = {}
+    var multiplier = 1.01
+    var x
+    Number.prototype.between = function(a, b) {
+        var min = Math.min.apply(Math, [a, b]),
+            max = Math.max.apply(Math, [a, b]);
+        return this > min && this < max;
+    };
+
+    function draw() {
+        cont.clearRect(0,0,canvasWidth,canvasHeght)
+        for(i = 0; i < 2; i++) {
+            hell = players[i]
+            cont.fillRect(hell.x, hell.y, hell.width, hell.height)
+        }
+        drawBall()
+        cont.beginPath()
+        cont.lineWidth = "1"
+        cont.moveTo(canvasWidth/2, 0)
+        cont.lineTo(canvasWidth/2, canvasHeght)
+        cont.stroke()
+        cont.closePath()
+    }
+    onkeydown = onkeyup = function(e) {
+        e = e || event
+        map[e.keyCode] = e.type == 'keydown'
+    }
+    function newPlayers() {
+        players[0] = new Player(50)
+        players[1] = new Player(canvasWidth-50)
+        ball = new Ball()
+    }
+    function movePlayer(player, move) {
+        player.y += move / 2
+        setTimeout(player.y += move / 2, 50)
+    }
+    function drawBall() {
+        cont.fillRect(ball.x-ball.width/2, ball.y-ball.width/2, ball.width, ball.width)
+        moveBall()
+    }
+    function moveBall() {
+        let moveX = getRndInteger(1,2) * speed
+        let moveY = getRndInteger(1,2) * speed
+        if(ball.x <= ball.width/2 || ball.x + ball.width/2 >= canvasWidth) {
+            if(ball.x <= ball.width/2) player2Score++
+            if(ball.x + ball.width/2 >= canvasWidth) player1Score++
+            directionX =!directionX
+            console.log(speed)
+            speed = 1
+            document.getElementById('score1').innerHTML = player1Score
+            document.getElementById('score2').innerHTML = player2Score
+            restartGame()
+        }
+        if(ball.y <= ball.width/2) directionY = true
+        if(ball.y >= canvasHeght - ball.width/2) directionY = false
+        if(ball.x.between(players[0].x, players[0].x + players[0].width) && ball.y.between(players[0].y, players[0].y + players[0].height)) {
+            directionX = true
+            speed *= multiplier
+        }
+        if(ball.x.between(players[1].x, players[1].x + players[1].width) && ball.y.between(players[1].y, players[1].y + players[1].height)) {
+            directionX = false
+            speed *= multiplier
+        }
+
+        if(directionX) ball.x += moveX
+        else ball.x -= moveX
+
+        if(directionY) ball.y += moveY
+        else ball.y -= moveY
+    }
+    function randBool() {
+        return Math.random() >= 0.5;
+    }
+    function restartGame() {
+        clearInterval(game)
+        newPlayers()
+        game = setInterval(draw, 1)
+    }
+    function leftUp() {
+        if(map['87']) { //W
+            if(players[0].y <= 0) return
+            movePlayer(players[0], -2)
+        }
+    }
+    function leftDown() {
+        if(map['83']) { //S
+            if(players[0].y >= canvasHeght - players[0].height) return
+            movePlayer(players[0], 2)
+        }
+    }
+    function rightUp() {
+        if(map['38']) { //Up
+            if(players[1].y <= 0) return
+            movePlayer(players[1], -2)
+        }
+    }
+    function rightDown() {
+        if(map['40']) { //Down
+            if(players[1].y >= canvasHeght - players[1].height) return
+            movePlayer(players[1], 2)
+        }
+    }
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min) ) + min;
+    }
+    setInterval(leftUp, 5)
+    setInterval(leftDown, 5)
+    setInterval(rightUp, 5)
+    setInterval(rightDown, 5)
+    restartGame()
     </script>
 </body>
 </html>
