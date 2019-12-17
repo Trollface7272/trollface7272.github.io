@@ -1,0 +1,12 @@
+#playing {
+    position: absolute;
+    float: right;
+    margin-right: 25vw;
+    margin-top: 25vh;
+}
+#text {
+    float: right;
+    font-size: 25px;
+    margin-right: 26.5vw;
+    margin-top: 22vh;
+}

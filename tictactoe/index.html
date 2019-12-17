@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="index.css">
+    <script src="square.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <canvas width="900px" height="900px" id="canvas"></canvas>
+    <div id="text">Now Playing:</div>
+    <canvas id="playing" width="250px" height="250px"></canvas>
+    <script>
+    const canvas = document.getElementById('canvas')
+    const cont = canvas.getContext('2d')
+    const playing = document.getElementById('playing')
+    const playcont = playing.getContext('2d')
+    var tiles = []
+    var collumns
+    var rows
+    var turn = true //true = cross  false = circle
+    rows = collumns = 12
+    document.addEventListener("click", click)
+
+    function draw() {
+        cont.fillRect(tiles[0][0].x-1, tiles[0][0].y-1, tiles[0][0].width * rows +2, tiles[0][0].width * rows +2)
+        tiles.forEach(elem => {
+            elem.forEach(tile => {
+                cont.fillRect(tile.x, tile.y, tile.width, tile.width)
+                cont.clearRect(tile.x+1, tile.y+1, tile.width-2, tile.width-2)
+            });
+        });
+    }
+    
+    function getTiles() {
+        let tilesHelper = []
+        for(i = 0; i < rows; i++) {
+            for(j = 0; j < collumns; j++) {
+                tilesHelper[j] = new Square(i, j, cont)
+            }
+            tiles[i] = tilesHelper
+            tilesHelper = []
+        }
+    }
+    function click(event) {
+        let width = tiles[0][0].width
+        let indexX = parseInt((event.x - 10) / width)
+        let indexY = parseInt((event.y - 10) / width)
+
+        if(tiles[indexX][indexY].isClicked == null) {
+            if(turn) tiles[indexX][indexY].draw('cross')
+            else     tiles[indexX][indexY].draw('circle')   
+            checkForWin(indexX, indexY, -1, -1)
+            checkForWin(indexX, indexY, 1, -1)
+            checkForWin(indexX, indexY, -1, 1)
+            checkForWin(indexX, indexY, 1, 1)
+            checkForWin(indexX, indexY, 0, 1)
+            checkForWin(indexX, indexY, 1, 0)
+            checkForWin(indexX, indexY, 0, -1)
+            checkForWin(indexX, indexY, -1, 0)
+            turn = !turn   
+        }
+        updatePlaying()
+    }
+    function updatePlaying() {
+        playcont.clearRect(0,0,250,250)
+        playcont.beginPath()
+        if(turn) {
+            playcont.moveTo(0,0)
+            playcont.lineTo(250,250)
+            playcont.stroke()
+            playcont.moveTo(0,250)
+            playcont.lineTo(250,0)
+            playcont.stroke()
+        }else if(!turn) {
+            playcont.arc(125,125,120,0,Math.PI*2)
+            playcont.lineWidth = "5"
+            playcont.stroke()
+        }
+        playcont.closePath()
+    }
+    function checkForWin(indexX, indexY, xMove, yMove) {
+        let helper = 1
+        while(indexX > 0 && indexY > 0 && indexX < rows-1 && indexY < rows-1    ) {
+            indexX += xMove
+            indexY += yMove
+            if(tiles[indexX][indexY].isClicked == turn) helper++
+            else return
+            if(helper == 5) {
+                let alertmsg = turn ? 'Cross' : 'Circle'
+                setTimeout(() => {alert(alertmsg + " Won!")}, 1)
+                
+            }
+        }
+    }
+    getTiles()
+    draw()
+    updatePlaying()
+    </script>
+</body>
+</html>

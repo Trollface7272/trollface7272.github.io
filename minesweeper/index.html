@@ -79,8 +79,8 @@
         document.addEventListener('contextmenu', e => e.preventDefault())
         canvas.oncontextmenu = function(e) {
             try{
-                var indexX = parseInt((e.clientX - 5) / 60)
-                var indexY = parseInt((e.clientY - 5)/ 60)
+                var indexX = parseInt((e.x - 5) / 60)
+                var indexY = parseInt((e.y - 5)/ 60)
                 console.log(x[indexX][indexY])
                 if(x[indexX][indexY].hasFlag) {
                     if(x == null) return

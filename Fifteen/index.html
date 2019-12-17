@@ -15,6 +15,7 @@
     const cont = canv.getContext("2d")
     var tileList = []
     var width = 170
+    var scrambled = false
     //Gen array with tiles
     for(i = 0; i < 16; i++) {
         tileList[i] = new tile(i)
@@ -34,8 +35,8 @@
     }
     function click(event) {
         //Get X and Y cords of clicked tile
-        let x = parseInt((event.clientY) / 200)
-        let y = parseInt((event.clientX) / 200)
+        let x = parseInt((event.y) / 200)
+        let y = parseInt((event.x) / 200)
         //Get index that this tile has in array
         let index = (x * 4) + (y + 1) - 1
         let move = 'none'
@@ -85,6 +86,7 @@
         
         //Draw moved tiles
         draw()
+        if(scrambled) checkForWin()
     }
     function scramble() {
         let checkIndex
@@ -123,8 +125,18 @@
     function randBool() {
         return Math.random() >= 0.5;
     }
+    function checkForWin() {
+        draw()
+        let result = 0
+        for(i = 0; i < tileList.length; i++) if(tileList[i].number == i+1) result +=1
+            else return
+        if(result == tileList.length) setTimeout(() => {alert('You won!')}, 1)
+    }
     draw()
-    for(i = 0; i < 1000; i++) scramble()
-    </script>
+    if(1) {
+        for(i = 0; i < 1000; i++) scramble()
+        scrambled = true
+    }
+        </script>
 </body>
 </html>
