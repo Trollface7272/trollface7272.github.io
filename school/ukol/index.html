@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/tile.js"></script>
+    <title>Úkol</title>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="800"></canvas><br>
+    <input type="text" name="link" id="link">
+    <input type="button" value="Nastav Obrázek" onclick="addImage()">
+
+    <script>
+        const canvas = document.getElementById('canvas')
+        const cont = canvas.getContext('2d')
+        let limitHeight = 100
+        let limitWidth  = 100
+        let tileList = []
+        let image = null
+        canvas.addEventListener("mousemove", move)
+
+        function draw() {
+            cont.clearRect(0,0,800,800)
+            if(image != null) cont.drawImage(image, 0, 0)
+            tileList.forEach(x => {
+                x.forEach(tile => {
+                    cont.fillStyle = `rgba(0, 0, 0, ${tile.color})`
+                    cont.fillRect(tile.x * tile.width, tile.y * tile.width, tile.width, tile.width)
+                    
+                });
+            });
+        }
+        function createTiles() {
+            for(i = 0; i < limitHeight; i++) {
+                let helper = []
+                for(j = 0; j < limitWidth; j++) {
+                    helper[j] = new tile(j, i)
+                }
+                tileList[i] = helper
+                helper = []
+            }
+            setInterval(() => {
+                draw()
+            }, 50);
+        }
+        function move(event) {
+            let change
+            if(event.buttons != 1 && event.buttons != 2) return
+            if(event.buttons == 2) change = -1
+            else change = 0.1  
+            let y = parseInt(event.x / tileList[0][0].width) - 1
+            let x = parseInt(event.y / tileList[0][0].width) - 1
+            if(x > limitWidth || y > limitHeight) return
+            tileList[x][y].color -= tileList[x][y].color < 0 ? 0 : change
+        }
+        function addImage() {
+            image = new Image(800, 800)
+            image.src = document.getElementById('link').value
+        }
+        createTiles()
+    </script>
+    <script type="text/javascript">
+        document.oncontextmenu =new Function("return false;")
+        document.onselectstart =new Function("return false;")
+    </script>
+</body>
+</html>
