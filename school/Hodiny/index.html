@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="400px" height="400px"></canvas>
+    <script type="text/javascript">
+        var can = document.getElementsByTagName("canvas")[0];
+        var c = can.getContext("2d");
+        var grd = c.createRadialGradient(200,200,25,200,200,200);
+        
+
+
+        x = setInterval(rucicky, 100)
+
+        function rucicky() {
+            demonstroMamilla()
+            c.closePath();
+            let time = new Date()
+            let seconds = time.getSeconds()
+            let minutes = time.getMinutes()
+            let hours = time.getHours()
+            let x = []
+            let y = []
+
+            let uhel = Math.PI*2/60*seconds - Math.PI/2
+            let uhel2 = Math.PI*2/60*minutes - Math.PI/2
+            let uhel3 = Math.PI*2/60*hours - Math.PI/2
+
+            //Sekundy
+            x[0] = 200+140 * Math.cos(uhel)
+            y[0] = 200+140 * Math.sin(uhel)
+
+            //Minuty
+            x[1] = 200+140 * Math.cos(uhel2)
+            y[1] = 200+140 * Math.sin(uhel2)
+
+            //Hodiny
+            x[2] = 40+200 * Math.sin(uhel3)
+            y[2] = 180+140 * Math.sin(uhel3)
+            
+            for(i = 0; i < 3; i++)
+            drawRucicka(x[i], y[i], (i+1)*2)
+            //drawCepice(x[2], y[2], uhel3)
+        }
+        function demonstroMamilla() {
+            c.clearRect(0, 0, 9000, 9000)
+            c.strokeStyle = "black"
+            grd.addColorStop(0, "#ff007f");
+            grd.addColorStop(0.6, "#ffe6e6");
+            grd.addColorStop(1, "#e67a7e");
+            c.fillStyle = grd;
+            c.fillRect(0,0,400,400);
+            c.beginPath();
+            c.setLineDash([15,15])
+            c.arc(200, 200, 160, 0, 2*Math.PI);
+            c.stroke();
+        }
+        function drawRucicka(x, y, width) {
+            c.beginPath()
+            c.strokeStyle = "black"
+            c.setLineDash([])
+            c.lineWidth = width
+            c.moveTo(200,200)
+            c.lineTo(x, y)
+            c.stroke()
+            c.closePath()
+        }
+        function drawCepice(x, y, uhel) {
+            c.beginPath()
+            c.setLineDash([])
+            c.lineWidth = 5
+            c.strokeStyle = "white"
+            let help = 200+90 * Math.sin(uhel + Math.PI/2)
+            c.moveTo(200,200)
+            c.lineTo(x,help)
+            moveTo(200,200)
+            help = help 
+            c.moveTo(200,200)
+            c.lineTo(x,help)
+            moveTo(200,200)
+            c.stroke()
+            c.closePath()
+        }
+    </script>
+</body>
+</html>
+
+
+<!-- c.beginPath()
+            c.moveTo(200,200)
+            c.setLineDash([])
+            c.lineWidth = 250
+            c.lineTo(x,y)
+            c.moveTo(200,200)
+            c.lineWidth = 6
+            c.lineTo(x2,y2)
+            c.lineWidth = 3
+            c.moveTo(200,200)
+            c.lineTo(x3,y3)
+            c.stroke()
+            c.closePath() -->

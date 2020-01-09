@@ -1,0 +1,30 @@
+* {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+#seznam {
+    width: 40vw;
+    height: 80vh;
+}
+.seznam {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: fit-content;
+    height: fit-content;
+    font-size: 200%;
+    margin-bottom: 2px;
+    padding: 20px;
+}
+#menu {
+    width: fit-content;
+    height: fit-content;
+}
+b {
+    margin: 25%;
+}
+input[type=number] {
+    width: 50px;
+}

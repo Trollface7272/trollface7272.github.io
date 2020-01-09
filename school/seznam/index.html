@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="CSS/index.css">
+    <script src="scripts/divclass.js"></script>
+    <title></title>
+</head>
+<body>
+    <div id="menu">
+        <b>Nákupní seznam</b><br>
+        <input type="number" name="number" placeholder="Číslo" id="number">
+        <input type="text" name="text" placeholder="Produkt" id="text" autocomplete="off">
+        <input type="button" value="Přidat" onclick="addDiv()">
+    </div>
+    <div id="seznam">
+        
+    </div>
+
+
+
+    <script>
+        let id = 0
+        let objects = []
+        
+        function addDiv() {
+            objects[objects.length] = new Seznam(document.getElementById('text').value, document.getElementById('number').value, id)
+            objects[objects.length-1].addDiv()
+            id++
+        }
+        function decrement(i) {
+            if(document.getElementById(i).style.border != "") objects[i].decrement()
+            else setBorder(i)
+        }
+        function setBorder(x) {
+            try{
+                document.getElementById(x).style.border = "solid black 1px"
+            }catch(e) {
+                if(e instanceof TypeError) var c
+            }
+        }
+    </script>
+</body>
+</html>
