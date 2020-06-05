@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Css-->
+        <link rel="stylesheet" href="./css/index.css">
+    <!-- /Css-->
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <!-- /Scripts-->
+    <title>Obamium Clicker</title>
+</head>
+<body>
+    <!--<div id="header"></div>-->
+    <div id="left" class="tab">
+        <div id='obamiumCount'>You currently have <br>
+            <span id="count">0</span> Obamium <br>
+            <span id="prodCount">0</span> Obamium/Sec
+            <img src="obamium/prism.gif" id="obamium" style="width: 300px; height: 300px;">
+        </div>
+    </div>
+
+
+    <div id="middle" class="tab">
+        <div id="top-wrapper">
+            
+            <button id="settingsToggle" class="toggle transButton" style="border-right: 1px black solid;"><b>Settings</b></button>
+            <button id="leaderboardsToggle" class="toggle transButton"><b>Leaderboards</b></button>
+        </div>
+        <div id="settings">
+            <div id="username-display">Welcome <b><span id="username">f</span></b></div>
+            <button id="save" class="transButton settButton">Save</button>
+            <button id="change-username" class="transButton settButton">Change Username</button>
+            <input type="text" id="new-username">
+            <button id="wipe" class="transButton settButton">Wipe my Save</button>
+            <div id="changelog">
+                <div id="changelog-title"><b>Changlog</b></div>
+                <div class="change">
+                    <div class="changlog-subtitle">Initial Release - 1.0</div>
+                    <div> - Created the game </div>
+                </div>
+            </div>
+        </div>
+        <div id="leaderboards" style="visibility: hidden;">
+            <table id="table" style="width:100%">
+                <tr>
+                    <th>Username</th>
+                    <th>Obamium</th>
+                    <th>Clicks</th>
+                    <th>Playtime</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div id='upgradeMenu' class="tab">
+        <div id='upgradeBoosters'>
+            <div id="upgrade-content" hidden>
+                <b><div id="upgrade-title"></div></b>
+                <div id="upgrade-desc"></div>
+            </div>
+            <div id="upgrades-wrapper">
+                <div class="upgrade" id="White House"><img src="obamium/house.jpg" alt="" id="upgrade-img"></div>
+                <div class="upgrade" id="Vibe Check"><img src="obamium/check.png" alt="" id="upgrade-img"></div>
+                <div class="upgrade" id="Obama Bus"><img src="obamium/bus.png" alt="" id="upgrade-img"></div>
+                <div class="upgrade" id="Tesseract"><img src="obamium/tesseract.gif" alt="" id="upgrade-img"></div>
+            </div>
+        </div>
+        <div id='boosters'>
+            <div id="sphere" class="booster">
+                <div class="production">
+                    <img src="obamium/sphere.png" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Sphere</b></div>
+                    <div class="pDesc" id="Obama Sphere">
+                        Obama Sphere grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="pill" class="booster">
+                <div class="production">
+                    <img src="obamium/pill.png" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Pill</b></div>
+                    <div class="pDesc" id="Obama Pill">
+                        Obama Pill grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='plant'class="booster">
+                <div class="production">
+                    <img src="obamium/plant.png" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Plant</b></div>
+                    <div class="pDesc" id="Obama Plant">
+                        Obama Plant grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='printer'class="booster">
+                <div class="production">
+                    <img src="obamium/printer.png" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Printer</b></div>
+                    <div class="pDesc" id="Obama Printer">
+                        Obama Printer grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='ring'class="booster">
+                <div class="production">
+                    <img src="obamium/ring.gif" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Ring</b></div>
+                    <div class="pDesc" id="Obama Ring">
+                        Obama Ring grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='clock'class="booster">
+                <div class="production">
+                    <img src="obamium/clock.png" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Clock</b></div>
+                    <div class="pDesc" id="Obama Clock">
+                        Obama Clock grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='ball'class="booster">
+                <div class="production">
+                    <img src="obamium/ball.gif" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Ball</b></div>
+                    <div class="pDesc" id="Obama Ball">
+                        Obama Ball grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='cat'class="booster">
+                <div class="production">
+                    <img src="obamium/cat.png" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Cat</b></div>
+                    <div class="pDesc" id="Obama Cat">
+                        Obama Clock grants you <span id="clockProduction" class="prod"></span> production <br>
+                        Current cost: <span id="clockCost" class="cost"></span> <br>
+                        Current ammount: <span id="clockAmmount" class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='ingot'class="booster">
+                <div class="production">
+                    <img src="obamium/ingot.png" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Ingot</b></div>
+                    <div class="pDesc" id="Obama Ingot">
+                        Obama Ingot grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='cupcake'class="booster">
+                <div class="production">
+                    <img src="obamium/cupcake.png" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Cupcake</b></div>
+                    <div class="pDesc" id="Obama Cupcake">
+                        Obama Cupcake grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='fedora'class="booster">
+                <div class="production">
+                    <img src="obamium/fedora.gif" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Fedora</b></div>
+                    <div class="pDesc" id="Obama Fedora">
+                        Obama Fedora grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='ingot'class="booster">
+                <div class="production">
+                    <img src="obamium/polyhedron.gif" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Polyhedron</b></div>
+                    <div class="pDesc" id="Obama Polyhedron">
+                        Obama Polyhedron grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+            <div id='bomb'class="booster">
+                <div class="production">
+                    <img src="obamium/bomb.gif" id="icon" alt="">
+                    <div class="pTitle"><b>Obama Bomb</b></div>
+                    <div class="pDesc" id="Obama Bomb">
+                        Obama Bomb grants you <span class="prod"></span> production <br>
+                        Current cost: <span class="cost"></span> <br>
+                        Current ammount: <span class="ammount"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var token
+        var username = ""
+        var id = ""
+        var game = {
+            obamium: 0,
+            clicks: 0,
+            clickPower: 1,
+            clickBonus: 0,
+            playtime: 0,
+            production: 0,
+            prodUpgrade: {
+                "Obama Sphere": {
+                    cost: 85,
+                    baseCost: 85,
+                    ammount: 0,
+                    production: 1
+                },
+                "Obama Pill": {
+                    cost: 280,
+                    baseCost: 280,
+                    ammount: 0,
+                    production: 5
+                },
+                "Obama Plant": {
+                    cost: 4000,
+                    baseCost: 4000,
+                    ammount: 0,
+                    production: 40
+                },
+                "Obama Printer": {
+                    cost: 28000,
+                    baseCost: 28000,
+                    ammount: 0,
+                    production: 300
+                },
+                "Obama Ring": {
+                    cost: 325000,
+                    baseCost: 325000,
+                    ammount: 0,
+                    production: 2500
+                },
+                "Obama Clock": {
+                    cost: 2450000,
+                    baseCost: 2450000,
+                    ammount: 0,
+                    production: 13500
+                },
+                "Obama Ball": {
+                    cost: 47850000,
+                    baseCost: 47850000,
+                    ammount: 0,
+                    production: 81000
+                },
+                "Obama Cat": {
+                    cost: 852000000,
+                    baseCost: 852000000,
+                    ammount: 0,
+                    production: 415000
+                },
+                "Obama Ingot": {
+                    cost: 10025000000,
+                    baseCost: 10025000000,
+                    ammount: 0,
+                    production: 263000
+                },
+                "Obama Cupcake": {
+                    cost: 140542000000,
+                    baseCost: 140542000000,
+                    ammount: 0,
+                    production: 1510000
+                },
+                "Obama Fedora": {
+                    cost: 2000000000000,
+                    baseCost: 2000000000000,
+                    ammount: 0,
+                    production: 12100000
+                },
+                "Obama Polyhedron": {
+                    cost: 31000000000000,
+                    baseCost: 31000000000000,
+                    ammount: 0,
+                    production: 6810000
+                },
+                "Obama Bomb": {
+                    cost: 988000000000000,
+                    baseCost: 988000000000000,
+                    ammount: 0,
+                    production: 42510000
+                }
+            },
+            upgrade: {
+                "White House": {
+                    id: 1,
+                    text: "The ultimate housing adds 1% of your Obamium/Sec to your click power.",
+                    cost: 1000000,
+                    boost: 0.01,
+                    bought: false,
+                },
+                "Vibe Check": {
+                    id: 2,
+                    text: "You can now check Vibe of any person and if they fail you get obamium. <br>Grants 4% of your Obamium/Sec to your click power.",
+                    cost: 1000000000,
+                    boost: 0.04,
+                    bought: false,
+                },
+                "Obama Bus": {
+                    id: 3,
+                    text: "The ultimite bus allows you to go to places nobody has ever been before. <br>Grants 10% of your Obamium/Sec to your click power.",
+                    cost: 1000000000000,
+                    boost: 0.1,
+                    bought: false,
+                },
+                "Tesseract": {
+                    id: 4,
+                    text: "The Tesseract has power to bring Obamium from another dimensions making it the best way to gaim Obamium. <br>Grants 35% of your Obamium/Sec to your click power.",
+                    cost: 1000000000000000,
+                    boost: 0.35,
+                    bought: false,
+                },
+            }
+        }
+        hooks()
+        function checkCookies() {
+            if(Cookies.get("token") == undefined) {
+                token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) +Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) +Math.random().toString(36).substring(2, 15)
+                Cookies.set("token", token, { expires: 999999 })
+                save()
+            }else {
+                token = Cookies.get("token")
+                loadData()
+            }  
+        }
+        function loadData() {
+            $.post("./php/load.php", {"token": token}, (res)=> {
+                res = JSON.parse(res)
+                console.log(res)
+                id = res.id
+                username = res.username
+                game.obamium = parseInt(res.obamium)
+                game.clicks = parseInt(res.clicks)
+                game.playtime = parseInt(res.playtime)
+                game.prodUpgrade["Obama Sphere"].ammount = parseInt(res.spheres)
+                game.prodUpgrade["Obama Pill"].ammount = parseInt(res.pills)
+                game.prodUpgrade["Obama Plant"].ammount = parseInt(res.plant)
+                game.prodUpgrade["Obama Printer"].ammount = parseInt(res.printer)
+                game.prodUpgrade["Obama Ring"].ammount = parseInt(res.ring)
+                game.prodUpgrade["Obama Clock"].ammount = parseInt(res.clock)
+                game.prodUpgrade["Obama Ball"].ammount = parseInt(res.ball)
+                game.prodUpgrade["Obama Cat"].ammount = parseInt(res.cat)
+                game.prodUpgrade["Obama Ingot"].ammount = parseInt(res.ingot)
+                game.prodUpgrade["Obama Cupcake"].ammount = parseInt(res.cupcake)
+                game.prodUpgrade["Obama Fedora"].ammount = parseInt(res.fedora)
+                game.prodUpgrade["Obama Polyhedron"].ammount = parseInt(res.polyhedron)
+                game.prodUpgrade["Obama Bomb"].ammount = parseInt(res.bomb)
+                game.upgrade["White House"].bought = parseInt(res.house) == 1 ? true : false
+                game.upgrade["Vibe Check"].bought = parseInt(res.check) == 1 ? true : false
+                game.upgrade["Obama Bus"].bought = parseInt(res.bus) == 1 ? true : false
+                game.upgrade["Tesseract"].bought = parseInt(res.tesseract) == 1 ? true : false
+                checkUpgrades()
+                calcProduction()
+                updateCurrentValues()
+            })
+        }
+        function calcProduction() {
+            for(let key in game.prodUpgrade) {
+                game.production += game.prodUpgrade[key].ammount * game.prodUpgrade[key].production
+            }
+        }
+        function obamiumClick() {
+            game.obamium += Math.round(game.clickPower + game.production* game.clickBonus)
+            game.clicks++
+        }
+        function updateCount() {
+            $("#count").text(game.obamium)
+            $("#prodCount").text(game.production)
+        }
+        function updateCosts() {
+            for(let key in game.prodUpgrade)
+                game.prodUpgrade[key].cost = Math.round(game.prodUpgrade[key].baseCost * (Math.pow(1.15, game.prodUpgrade[key].ammount)))
+        }
+        function produce() {
+            game.obamium += game.production
+            game.playtime++
+        }
+        function updateCurrentValues() {
+            updateCosts()
+            $(".pDesc").each((i, obj) => {
+                let upg = $(obj).attr("id")
+                $(obj).find(".prod").text(game.prodUpgrade[upg].production)
+                $(obj).find(".cost").text(game.prodUpgrade[upg].cost)
+                $(obj).find(".ammount").text(game.prodUpgrade[upg].ammount)
+            })
+            if(username == null) {
+                $("#username").text("Guest")
+            }else {
+                $("#username").text(username)
+            }
+        }
+        function formatData() {
+            let h = {}
+            let upgrades = {}
+            for(let key in game.prodUpgrade) {
+                h[key] = game.prodUpgrade[key].ammount
+            }
+            for(let key in game.upgrade) {
+                if(game.upgrade[key].bought) upgrades[key] = 1
+                else upgrades[key] = 0
+            }
+            return {
+                token: token,
+                obamium: game.obamium,
+                clicks: game.clicks,
+                playtime: game.playtime,
+                boosters: h,
+                upgrades: upgrades
+            }
+        }
+        function save() {
+            $.post("./php/save.php", {data: formatData()}, (res)=>{console.log(res)})
+        }
+        function changeUsername() {
+            save()
+            $.post("./php/changeUsername.php", {token: token, username: $("#new-username").val()}, (res) => {console.log(res)})
+            loadData()
+        }
+        function sortBy(sort) {
+            $.post("./php/leaderboards.php", {sort: sort}, (res) => {
+                makeLeaderboards(res)
+            })
+        }
+        function loadLeaderboards() {
+            $.post("./php/leaderboards.php", {}, (res) => {
+                makeLeaderboards(res)
+            })
+        }
+        function makeLeaderboards(res) {
+            $("#table").html("<tr id='mainTr'><th id='position'>Position</th><th id='usernam'>Username</th><th id='Obamium'>Obamium</th><th id='clicks'>Clicks</th><th id='playtime'>Playtime</th></tr>")
+                let i = 1
+                res = JSON.parse(res)
+                console.log(res)
+                res.forEach(el => {
+                    let username = el.username == null ? "Guest-"+el.id : el.username
+                    let obamium = el.obamium
+                    let clicks = el.clicks
+
+                    let hours = parseInt(el.playtime/60/60)
+                    let minutes = parseInt(el.playtime/60 - hours*60)
+                    let seconds = parseInt(el.playtime - minutes * 60 - hours * 60 * 60)
+
+                    hours = hours > 0 ? hours + "h " : ""
+                    minutes = minutes > 0 ? minutes + "m " : ""
+                    seconds = seconds > 0 ? seconds + "s " : ""
+
+                    console.log(hours, minutes, seconds)
+                    let playtime = `${hours}${minutes}${seconds}`
+                    let final = `<tr> <th>${i}</th> <th>${username}</th> <th>${obamium}</th> <th>${clicks}</th> <th>${playtime}</th> </tr>`
+                    i++
+
+                    $("#table").append(final)
+                });
+                $("#position").click(reverseLeaderboards)
+                $("#usernam").click(function(){sortBy("username")})
+                $("#Obamium").click(function(){sortBy("obamium")})
+                $("#clicks").click(function(){sortBy("clicks")})
+                $("#playtime").click(function(){sortBy("playtime")})
+        }
+        function reverseLeaderboards() {
+            var table = $('table');
+            var rows = table.find('tr:not(:first)');
+
+            $('tr:first').after(rows.get().reverse());
+        }
+        function checkUpgrades() {
+            game.clickBonus = 1
+            $(".upgrade").each((i, obj) => {
+                let upgName = $(obj).attr("id")
+                if(game.upgrade[upgName].bought) {
+                    game.clickBonus += game.upgrade[upgName].boost
+                    $(obj).remove()
+                }
+            })
+        }
+        function deleteSave() {
+            let sure = confirm("Are you sure?")
+            if(sure) {
+                $.post("./php/wipe.php", {token: token}, (res) => {})
+                location.reload();
+            }
+        }
+        function hooks() {
+            $("#obamium").click(obamiumClick)
+            setInterval(updateCount, 50)
+            setInterval(produce, 1000)
+            setInterval(save, 30000)
+            updateCurrentValues()
+            $(".booster").each((i, obj) => { 
+                $(obj).click(() => {
+                    let upg = $(obj).find(".pDesc").attr("id")
+                    if(game.obamium > game.prodUpgrade[upg].cost) {
+                        game.obamium -= game.prodUpgrade[upg].cost
+                        game.prodUpgrade[upg].ammount++
+                        game.production += game.prodUpgrade[upg].production
+                        updateCosts()
+                        updateCurrentValues()
+                    }
+                })
+            })
+            $(".upgrade").each((i, obj) => {
+                let upgName = $(obj).attr("id")
+                $(obj).mouseenter((evt) => {
+                    let text = game.upgrade[upgName].text + "<br>Cost: " + game.upgrade[upgName].cost + " Obamium"
+                    $("#upgrade-title").text(upgName)
+                    $("#upgrade-desc").html(text)
+                    $("#upgrade-content").show().html
+                })
+                $(obj).mousemove((evt) => {
+                    $("#upgrade-content").css({left: evt.pageX-500, top: evt.pageY})
+                })
+                $(obj).mouseleave((evt) => {
+                    console.log("out")
+                    $("#upgrade-content").hide()
+                })
+                $(obj).click(() => {
+                    if(game.obamium > game.upgrade[upgName].cost) {
+                        game.obamium -= game.upgrade[upgName].cost
+                        game.clickBonus += game.upgrade[upgName].boost
+                        game.upgrade[upgName].bought = true
+                        $(obj).remove()
+                        $("#upgrade-content").hide()
+                    }
+                })
+            })
+            checkCookies()
+            $("#settingsToggle").click(() => {
+                $("#leaderboards").css("visibility", "hidden")
+                $("#settings").css("visibility", "visible")
+            })
+            $("#leaderboardsToggle").click(() =>{
+                $("#settings").css("visibility", "hidden")
+                $("#leaderboards").css("visibility", "visible")
+                loadLeaderboards()
+            })
+            $("#wipe").click(deleteSave)
+            $("#save").click(save)
+            $("#change-username").click(changeUsername)
+            
+        }
+        
+    </script>
+</html>

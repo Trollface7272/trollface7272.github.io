@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+body {
+    background-color: #181a1b;
+    background-size: 50%;
+    touch-action: manipulation;
+    user-select: none;
+    overflow: hidden;
+}
+.tab {
+    height: 96vh;
+    background-image: linear-gradient(lime, orange);
+    border: solid darkgray 5px;
+    border-radius: 10px;
+    overflow-y: scroll;
+    
+}
+.transButton {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+.toggle {
+    float: left;
+    width: 50%;
+    height: 25px;
+    border-bottom: solid black 1px;
+}
+#left {
+    position: absolute;
+    width: 520px;
+    margin-left: 50px;
+}
+#upgradeMenu {
+    width: 520px;
+    margin-right: 50px;
+    float: right;
+    clear: right;
+}
+#upgrades-wrapper {
+    width: 100%;
+    float: left;
+    margin-left: 12px;
+    margin-top: 2.5%;
+}
+#changelog {
+    position: absolute;
+    left: 50%;
+    top: 8%;
+    height: 90%;
+    width: 48%;
+    border: solid 1px black;
+}
+#changelog-title {
+    border-bottom: solid black 1px;
+    font-size: 1.5em;
+    text-align: center;
+}
+.change {
+    margin-top: 20px;
+    border-bottom: solid black 1px;
+}
+.changlog-subtitle {
+    font-size: 1.3em;
+    text-align: center;
+}
+#upgrade-content {
+   position: absolute;
+   width: 500px;
+   height: fit-content;
+   border: solid black 1px;
+   background-color: lightgray;
+   pointer-events:none
+}
+.upgrade {
+    border: solid black 1px;
+    float: left;
+}
+.upgrade img {
+    width: 122px;
+    height: 122px;
+    float: left;
+}
+#upgrade-title {
+    border-bottom: black solid 1px;
+    text-align: center;
+    font-size: 1.25em;
+}
+#upgrade-desc {
+    margin-left: 1%;
+    font-size: 1.15em;
+}
+.production {
+    width: 490px;
+    height: 108px;
+    border: solid black 3px;
+    margin: auto;
+    margin-top: 2px;
+    background-image: repeating-linear-gradient(rgba(255, 0, 0, 0.2), rgba(0, 0, 255, 0.2))
+}
+.pTitle {
+    font-size: 1.5em;
+    text-align: center;
+    width: 382.2px;
+    border-bottom: black solid 1px;
+    margin-left: auto;
+}
+.pDesc {
+    font-size: 1em;
+    overflow: hidden;
+    float: left;
+    padding-left: 5px;
+}
+#obamiumCount {
+    position: absolute;
+    text-align: center;
+    top: 8%;
+    clear: both;
+    font-family: monospace;
+    font-size: 40px;
+}
+#icon {
+    height: 100%;
+    width: 107.8px;
+    background-size: 100%;
+    border-right: black solid 1px;
+    float: left;
+    background-repeat: no-repeat;
+}
+#middle {
+    position: absolute;
+    left: 33%;
+    width: 650px;
+}
+#username-display {
+    position: absolute;
+    width: 100%;
+    top: 2.5%;
+    text-align: center;
+    border-bottom: 1px black solid;
+}
+.settButton {
+    position: absolute;
+    left: 1%;
+    padding: 2px;
+}
+#save {
+    top: 10%;
+    color: black;
+    border: solid black 1px;
+}
+#change-username {
+    top: 13%;
+    border: solid black 1px;
+}
+#new-username {
+    position: absolute;
+    width: 20%;
+    left: 1%;
+    top: 15.5%;
+}
+#wipe {
+    top: 95%;
+    color: red;
+    border: 1px red solid;
+}
+/*#header {
+    width: 100%;
+    height: 3px;
+    border-bottom: black solid 2px;
+    text-align: center;
+    font-size: 30px;
+    background-image: linear-gradient(90deg, red, yellow);
+    background: linear-gradient(90deg, red 0%, yellow 15%, lime 30%, cyan 50%, blue 65%, magenta 80%, red 100%);
+    background-size: 200%;
+    animation: moveGradient 3s linear infinite;
+}*/
+#nop {
+    height: 10px;
+    width: 100%;
+}
+#upgradeBoosters {
+    width: 100%;
+    height: 150px;
+}
+::-webkit-scrollbar { width: 0 !important }
+
+/*@keyframes moveGradient
+{
+    0%{
+      background-position: 0% 0%;
+    }
+    100%{
+      background-position: -200% 0%;
+    }
+}*/
